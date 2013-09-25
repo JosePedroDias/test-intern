@@ -25,6 +25,9 @@ Taking the intern for a little test drive...
 * try the geezer version and see if its any worse
 
 
+I'm [writing a tutorial](https://github.com/JosePedroDias/test-intern/edit/master/README.md) about this too.
+
+
 
 # REFERENCE STUFF
 
