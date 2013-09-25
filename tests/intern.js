@@ -51,7 +51,8 @@ define({
 	loader: {
 		// Packages that should be registered with the loader in each testing environment
 		packages: [
-			{location:'js', name:'js'}
+			{location:'js',     name:'js'},
+            {location:'custom', name:'custom'}
 		]
 	},
 
@@ -67,14 +68,15 @@ define({
     ],
 
 	// A regular expression matching URLs to files that should not be included in code coverage analysis
-	//excludeInstrumentation: /^tests\//
-    excludeInstrumentation: /.*/ // no instrumentation at all :P
+	//excludeInstrumentation: /^tests\//,
+    excludeInstrumentation: /.*/, // no instrumentation at all :P
 
-    /*reporters: [
+    reporters: [
         // 'console' // for client
         //'webdriver'
 
-        // 'runner'
+        //'runner'
         //'lcov' // for runner
-    ]*/
+        'custom/jenkins'
+    ]
 });
