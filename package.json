@@ -1,15 +1,15 @@
 {
-	"name": "test-intern",
-	"version": "0.1.0",
-	"description": "Intern tutorial. Learn how to use Intern by following this tutorial!",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/josepedrodias/test-intern.git"
-	},
+  "name": "test-intern",
+  "version": "0.1.0",
+  "description": "Intern tutorial. Learn how to use Intern by following this tutorial!",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/josepedrodias/test-intern.git"
+  },
   "devDependencies": {
     "intern": "~1.2.1"
   },
   "scripts": {
-  	"test": "node node_modules/intern/runner.js config=tests/intern"
+    "test": "node node_modules/intern/runner.js config=tests/intern"
   }
 }

@@ -12,9 +12,14 @@ Taking the intern for a little test drive...
 * skip instrumentation (not useful for now)
 
 
-## Yet to accomplish:
+## Ongoing work:
 
-* functional test is very crippled so far
+* writing a custom reporter that outputs JUnit XML compliant to JenkinsCI
+* continue the functional test sample (far from perfect)
+
+
+## Yet to tackle:
+
 * perform async test in both unit test and functional tests
 * generate USEFUL report information
 * try the geezer version and see if its any worse
