@@ -1,1 +1,4 @@
+coverage.xml
+lcov.info
 node_modules
+report.xml
