@@ -18,75 +18,92 @@
     test:   name,test,parent,isAsync,timeElapsed,hasPassed
         test.timeElapsed - in ms
         test.error - on /test/fail
+
+
+    testsuites
+        testsuite
+            testcase          test
+                error         assertion
+                failure
 */
 
 
 
 define([
-    'intern/node_modules/dojo/node!xml-writer' // require('xml-writer')
-], function (XMLWriter) {
+     'intern/node_modules/dojo/node!xmlbuilder' // require('xmlbuilder')
+    ,'intern/node_modules/dojo/node!fs'         // require('fs')
+], function(xml, fs) {
 
-    var x;
+    var xtestsuites, xtestsuite, xtest;
+
+    var errors, failures, assertions;
 
 	return {
 
-        start: function() {
-            console.log('** REPORTER START **');
-
-            x = new XMLWriter();
-            x.startDocument();
-            x.startElement('root');
-            x.writeAttribute('foo', 'value');
-            x.text('Some content');
+        '/runner/start': function() {
+            xtestsuites = xml.create('testsuites');
         },
 
-        stop: function() {
-            console.log('** REPORTER STOP **');
-
-            x.endDocument();
-            console.log( x.toString() );
+        '/runner/end': function() {
+            //console.log( xtestsuites.end({pretty:true}) );
+            fs.writeFile('report.xml', xtestsuites.end({pretty:true}) );
         },
 
 
 
         '/session/start': function(remote) {
-			console.log('session ' + remote.environmentType + ' started');
+			console.log('  session ' + remote.environmentType + ' started');
 		},
 
 		'/session/end': function(remote) {
-			console.log('session ' + remote.environmentType + ' ended');
+			console.log('  session ' + remote.environmentType + ' ended');
 		},
 
 
 
         '/suite/start': function(suite) {
-			console.log('suite ' + suite.name + ' started');
+			console.log('    suite ' + suite.name + ' started');
+            xtestsuite = xtestsuites.ele('testsuite', {name:suite.name});
 		},
 
         '/suite/error': function(suite) {
-			console.log('suite ' + suite.name + ' error');
+			//console.log('    suite ' + suite.name + ' error');
 		},
 
 		'/suite/end': function(suite) {
-			console.log('suite ' + suite.name + ' ended');
+            //console.log(suite);
+			console.log('    suite ' + suite.name + ' ended');
 		},
 
 
 
 		'/test/start': function(test) {
-			console.log('test ' + test.name + ' started');
+			//console.log('      test ' + test.name + ' started');
+            xtest = xtestsuite.ele('testcase', {name:test.name});
+            assertions = 0;
+            errors     = 0;
+            failures   = 0;
 		},
 
         '/test/pass': function(test) {
-			console.log('test ' + test.name + ' passed');
+			console.log('      test ' + test.name + ' passed');
+            ++assertions;
 		},
 
         '/test/fail': function(test) {
-			console.log('test ' + test.name + ' failed');
+			console.log('      test ' + test.name + ' failed');
+            ++assertions;
+            ++failures;
+            xtest.ele('failure');
 		},
 
 		'/test/end': function(test) {
-			console.log('test ' + test.name + ' ended');
+            //console.log(test);
+			//console.log('      test ' + test.name + ' ended');
+            xtest.att('assertions', assertions);
+            xtest.att('failures',   failures);
+            xtest.att('errors',     errors);
+            xtest.att('time',       test.timeElapsed);
 		}
 
 	};
