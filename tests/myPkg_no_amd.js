@@ -10,6 +10,7 @@ define([
 
         add1: function() {
             assert.equal( myPkg.add1(2), 3 , 'add1(2) should return 3');
+            //throw new Error('argh');
         },
 
         add2: function() {
