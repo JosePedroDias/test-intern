@@ -9,14 +9,12 @@ Taking the intern for a little test drive...
 * functional testing (in remote webdriver)
 * working with browser AMD modules
 * working with browser js files no-AMD
-* skip instrumentation (not useful for now)
 
 
 ## Ongoing work:
 
 * writing a custom reporter that outputs JUnit XML compliant to JenkinsCI
-    * would be nice to count assertions. mostly done otherwise.
-* configure jenkins so it parses each xml file as a differene env?
+    * compute each env to different xml file or matrix?!
 * continue the functional test sample (far from perfect)
 
 
