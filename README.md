@@ -15,13 +15,14 @@ Taking the intern for a little test drive...
 ## Ongoing work:
 
 * writing a custom reporter that outputs JUnit XML compliant to JenkinsCI
+    * would be nice to count assertions. mostly done otherwise.
+* configure jenkins so it parses each xml file as a differene env?
 * continue the functional test sample (far from perfect)
 
 
 ## Yet to tackle:
 
 * perform async test in both unit test and functional tests
-* generate USEFUL report information
 * try the geezer version and see if its any worse
 
 
