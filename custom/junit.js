@@ -36,34 +36,46 @@ define([
 
     var xtestsuites, xtestsuite, xtest;
 
-    var errors, failures, tests;
+    var errors, failures, tests, suitetests;
 
     var isFunctional;
 
 	return {
 
         '/runner/start': function() {
-            xtestsuites = xml.create('testsuites');
+            console.log('runner start');
         },
 
         '/runner/end': function() {
-            //console.log( xtestsuites.end({pretty:true}) );
-            fs.writeFile('report.xml', xtestsuites.end({pretty:true}) );
+            console.log('runner end');
         },
 
 
 
         '/session/start': function(remote) {
 			console.log('  session ' + remote.environmentType + ' started');
+            xtestsuites = xml.create('testsuites');
 		},
 
 		'/session/end': function(remote) {
-			console.log('  session ' + remote.environmentType + ' ended');
+        try {
+                console.log('  session ' + remote.environmentType + ' ended');
+                var env = remote.environmentType.toString().replace(/ /g, '_');
+                var fn = 'report-' + env + '.xml';
+                console.log('writing report ' + fn + '...');
+                fs.writeFileSync(fn, xtestsuites.end({pretty:true}) );
+            } catch (ex) {
+                console.log(ex);
+            }
 		},
 
 
 
         '/suite/start': function(suite) {
+            if (suitetests === 0) { // this kill faulty suites from frontend resources
+                xtestsuite.remove();
+            }
+
 			//console.log('    suite ' + suite.name + ' started');
             isFunctional = suite.name.indexOf('(functional)') !== -1;
             var name = suite.name;
@@ -71,6 +83,7 @@ define([
                 name = name.substring( 0,  name.length - 13 );
             }
             xtestsuite = xtestsuites.ele('testsuite', {name:(isFunctional ? 'functional' : 'unit') + '.' +  name});
+            suitetests = 0;
 		},
 
         '/suite/error': function(suite) {
@@ -80,6 +93,8 @@ define([
 		'/suite/end': function(suite) {
             //console.log(suite);
 			console.log('    suite ' + suite.name + ' ended');
+
+            //console.log('had tests ' + suitetests);
 		},
 
 
@@ -90,6 +105,7 @@ define([
             tests      = 0;
             errors     = 0;
             failures   = 0;
+            ++suitetests;
 		},
 
         '/test/pass': function(test) {
@@ -100,8 +116,9 @@ define([
         '/test/error': function(test) {
 			console.log('      test ' + test.name + ' error');
             console.log(test.error.name + ': ' + test.error.message);
-            ++assertions;
             ++tests;
+            ++errors;
+
             xtest.ele('error', {type:test.error.name, message:test.error.message});
             if (test.error.stack) {
                 xtest.ele('system-err', test.error.stack);
@@ -113,6 +130,7 @@ define([
             console.log(test.error.name + ': ' + test.error.message);
             ++tests;
             ++failures;
+
             xtest.ele('failure', {type:test.error.name, message:test.error.message});
             if (test.error.stack) {
                 xtest.ele('system-err', test.error.stack);

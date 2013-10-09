@@ -29,7 +29,8 @@ define({
 		,{browserName:'chrome',                          platform:'Linux'}
 		,{browserName:'safari',            version: '6', platform:'Mac 10.8'}*/
 
-        {browserName:'chrome'}
+         {browserName:'chrome'}
+        ,{browserName:'firefox'}
 	],
 
 	// Maximum number of simultaneous integration tests that should be executed on the remote WebDriver service
@@ -51,15 +52,24 @@ define({
 	loader: {
 		// Packages that should be registered with the loader in each testing environment
 		packages: [
-			{location:'js',     name:'js'},
+			{location:'lib',    name:'lib'},
             {location:'custom', name:'custom'}
-		]
+		]/*,
+        trace:{ // http://dojotoolkit.org/reference-guide/1.9/loader/amd.html#loader-amd
+            "loader-inject":              1,
+            "loader-define":              1,
+            "loader-exec-module":         1,
+            "loader-run-factory":         1,
+            "loader-finish-exec":         1,
+            "loader-define-module":       1,
+            "loader-circular-dependency": 1
+        }*/
 	},
 
 	// Non-functional test suite(s) to run in each browser
 	suites: [
-         'intern/node_modules/dojo/has!host-browser?tests/myPkg_amd'
-        ,'intern/node_modules/dojo/has!host-browser?tests/myPkg_no_amd'
+        'intern/node_modules/dojo/has!host-browser?tests/myPkg_amd',
+        'intern/node_modules/dojo/has!host-browser?tests/myPkg_no_amd'
     ],
 
 	// Functional test suite(s) to run in each browser once non-functional tests are completed
@@ -77,6 +87,7 @@ define({
 
         //'runner'
         //'lcov' // for runner
-        'custom/jenkins'
+        //'custom/junit'
+        'custom/jsonunit'
     ]
 });

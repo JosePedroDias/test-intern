@@ -9,19 +9,21 @@ Taking the intern for a little test drive...
 * functional testing (in remote webdriver)
 * working with browser AMD modules
 * working with browser js files no-AMD
-* skip instrumentation (not useful for now)
+* created junit reporter
+* created json reporter
+* reporters are recording each browser session to a different file
 
 
 ## Ongoing work:
 
-* writing a custom reporter that outputs JUnit XML compliant to JenkinsCI
+* aggregate reports into matrix (ditch jenkins altogether?)
 * continue the functional test sample (far from perfect)
 
 
 ## Yet to tackle:
 
 * perform async test in both unit test and functional tests
-* generate USEFUL report information
+* generate USEFUL report information (aggregate)
 * try the geezer version and see if its any worse
 
 

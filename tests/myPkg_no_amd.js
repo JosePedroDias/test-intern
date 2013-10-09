@@ -1,7 +1,7 @@
 define([
     'intern!object',
     'intern/chai!assert',
-    'intern/order!/js/myPkg_no_amd.js',
+    'intern/order!/lib/myPkg_no_amd.js',
 ], function(registerSuite, assert) {
     var myPkg = window.myPkg;
 
